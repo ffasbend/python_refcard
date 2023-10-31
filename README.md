@@ -6,12 +6,13 @@ Fonts used in the document:
 - Calibri
 - Iosevka Fixed (https://typeof.net/Iosevka/), or download font directly from https://github.com/be5invis/Iosevka/releases/download/v27.3.3/ttf-iosevka-fixed-27.3.3.zip
 
+# Editing and compiling typst files with Visual Studio Code
 To typeset the document locally, download typst from its github repository (https://github.com/typst/typst).
 
 If you are using **vsCode** to edit typst files, install the following extensions:
 - Typst LSP
 - Typst Preview
 
-Copy the `.vscode` (with the file `tasks.json`) folder to your pc and compile the document with SHIFT + CMD + B and one of the following options
+Create a folder `.vscode` inside this document folder and move the file `tasks.json` to the folder `.vscode`. Now you can compile the document with SHIFT + CMD + B on mac with one of the following options
 - Watch typst file (auto-compile on save)...
 - Compile typst file...
