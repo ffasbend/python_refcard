@@ -13,6 +13,6 @@ If you are using **vsCode** to edit typst files, install the following extension
 - Typst LSP
 - Typst Preview
 
-Create a folder `.vscode` inside this document folder and move the file `tasks.json` to the folder `.vscode`. Now you can compile the document with SHIFT + CMD + B on mac with one of the following options
+Inside the folder `.vscode` is the task configuration file `tasks.json` for vscode. On Mac press SHIFT + CMD + B to compile the **typst** document and choose one of the following options
 - Watch typst file (auto-compile on save)...
 - Compile typst file...
