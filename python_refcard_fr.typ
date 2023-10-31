@@ -1,4 +1,4 @@
-#import "template.typ": *
+//#import "template.typ": *
 #import "@preview/tablex:0.0.6": tablex, colspanx, rowspanx, vlinex, hlinex
 
 /* --- page layout --- */
@@ -7,32 +7,6 @@
   bottom: 1.2cm,
   x: 0.8cm,
 ))
-
-/* --- page header --- */
-#set page(header: rect(stroke:(top:0pt, bottom:0.6pt), inset:(x:0pt, y:3pt))[
-  #smallcaps[Python 3 - Refcard] v2.8.14 (1#super[ère] et 2#super[e] B)
-  #h(1fr)
-  Page #counter(page).display(
-    "1/1",
-    both: true,
-  )
-])
-/* --- page footer --- */
-#let today = datetime.today().display("[day]/[month]/[year]")  // specify a custom format
-#set page(footer: rect(stroke:(top:0.6pt, bottom:0pt), inset:(x:0pt, y:3pt))[
-  python_refcard_fr.typ
-  #h(1fr)
-  version du #today
-])
-
-  // footer: [
-  //   #set align(right)
-  //   #set text(8pt)
-  //   #counter(page).display(
-  //     "1 of I",
-  //     both: true,
-  //   )
-  // ]
 
 /* --- define symbol, spacing shortcuts --- */
 // rigth arrow
@@ -47,6 +21,22 @@
 }
 #let quad = sym.space.quad // 1em space
 
+/* --- page header --- */
+#set page(header: rect(stroke:(top:0pt, bottom:0.6pt), inset:(x:0pt, y:3pt))[
+  #smallcaps[Python 3 - Refcard] v2.8.14 (1#super[ère] et 2#super[e] B)
+  #h(1fr)
+  Page #counter(page).display(
+    "1/1",
+    both: true,
+  )
+])
+/* --- page footer --- */
+#let today = datetime.today().display("[day]/[month]/[year]")  // specify a custom format
+#set page(footer: rect(stroke:(top:0.6pt, bottom:0pt), inset:(x:0pt, y:3pt))[
+  python_refcard_fr.typ #quad [#link("https://github.com/ffasbend/python_refcard")]
+  #h(1fr)
+  version du #today
+])
 
 /* --- fonts, colors, line spacing --- */
 //#let blue = color.rgb(56, 83, 145)
@@ -1483,7 +1473,7 @@ Position de la souris
   -	largeur de `0` … `WIDTH-1`
   -	hauteur de `0` … `HEIGHT-1`
   ],
-  align(right)[#image("pygame_screen.svg", width: 3cm)],
+  align(right)[#image("pics/pygame_screen.svg", width: 3cm)],
 )
 Dimensions de la surface de dessin
 
@@ -1580,7 +1570,7 @@ Dessiner un cercle sur la surface (`screen`)
   - coordonnées du point supérieur gauche : (`x`, `y`)
   -	coordonnées du point inférieur droit : (`x+width-1`, `y+height-1`)
   ],
-  align(right)[#image("pygame_rect.svg", width: 3cm)],
+  align(right)[#image("pics/pygame_rect.svg", width: 3cm)],
 )
 
 == Mise à jour de la surface de dessin
@@ -1700,10 +1690,10 @@ Exemple:
   columns: 2,     // 2 means 2 auto-sized columns
   gutter: 2mm,    // space between columns
   [*ASCII Control characters*], [*ASCII printable characters*],
-  image("ascii_control_characters2.png", height:9cm),
-  image("ascii_printable_characters2.png", height:9cm),
+  image("pics/ascii_control_characters2.png", height:9cm),
+  image("pics/ascii_printable_characters2.png", height:9cm),
 )
-#image("ascii_extended_characters3.png", height:8cm)
+#image("pics/ascii_extended_characters3.png", height:8cm)
 
 
 // #syntaxTable(columns: (auto, auto, auto),
@@ -1831,12 +1821,12 @@ Set items are unordered, unchangeable and do not allow duplicate values. Items c
 #h(1fr)#link("https://github.com/pygame/pygame/blob/main/src_py/colordict.py")
 
 == grey or gray
-#image("colors_grey.png")
+#image("pics/colors_grey.png")
 
 color, color1, … , color4
 
-#image("colors_4levels.png", width:9cm)
-#image("colors_other.png", height:8cm)
+#image("pics/colors_4levels.png", width:9cm)
+#image("pics/colors_other.png", height:8cm)
 
 = #smallcaps[Écrire une commande python sur plusieurs lignes]
 - Utiliser la continuité implicite des lignes au sein des parenthèses/crochets/accolades
