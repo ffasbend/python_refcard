@@ -49,7 +49,7 @@
 /* --- page footer --- */
 #let today = datetime.today().display("[day]/[month]/[year]")  // specify a custom format
 #set page(footer: rect(stroke:(top:0.6pt, bottom:0pt), inset:(x:0pt, y:3pt))[
-  python_refcard_fr.typ #quad [#link("https://github.com/ffasbend/python_refcard")]
+  python_refcard_fr.typ #quad [available online: #link("https://github.com/ffasbend/python_refcard")]
   #h(1fr)
   version du #today
 ])
@@ -79,6 +79,13 @@
   level: 2
 ): it => {
   set text(blue, font:"Calibri", size:8pt, weight:"semibold")
+  set block(above: 0.6em, below: 0.3em)
+  it
+}
+
+#show heading.where(
+  level: 3
+): it => {
   set block(above: 0.6em, below: 0.3em)
   it
 }
@@ -1038,9 +1045,18 @@ import math
    `radnom.randrange(start, stop, step)`],
   [retourne un entier au hasard de `[start ; stop[`. Seuls les multiples de `step` sont possibles. \
   (`start` = 0, `step` = 1 par défaut)], 
-  
+
   [`random.shuffle(seq)`],
-  [mélange aléatoirement les éléments de `seq`], 
+  [mélange aléatoirement les éléments de `seq`],
+)
+
+retourner le nombre aléatoire -1 ou 1
+
+#syntaxTable(
+  columns: (1fr, 1fr, 1fr),
+  [`randrange(-1, 2, 2)`],
+  [`2 * randint(0, 1) - 1`],
+  [`h = [-1, 1]  ,  choice(h)`],
 )
 
 = #smallcaps[Module: timit] #h(1fr) import timit
@@ -1144,7 +1160,7 @@ import math
 )
 To terminate readline(), when STDIN is read from keyboard, press CTRL-D (CTRL-Z on Windows)
 
-//#colbreak()
+#colbreak()
 = #smallcaps[Module: string] #h(1fr) import string
 
 #syntaxTable(
@@ -1202,8 +1218,7 @@ To terminate readline(), when STDIN is read from keyboard, press CTRL-D (CTRL-Z 
 === PyCharm
 #ar `File` -> `Settings` -> `Project:` votre projet actuel \
 #ar Sélectionner l'interprétateur Python (p.ex. 3.6.1), puis cliquer sur le symbole + à droite \
-#ar Choisir libraire à installer dans la liste \
-(cocher "Install to user's site packages directory" si pas administrateur)
+#ar Choisir libraire à installer dans la liste (cocher "Install to user's site packages directory" si pas administrateur)
 
 === Thonny
 #ar `Tools` -> `Manage Packages…` \
@@ -1223,11 +1238,11 @@ Module : Image (#link("https://pillow.readthedocs.io/en/5.1.x/"))
   
   [`Image.crop(box=None)`],
   [retourne une région rectangulaire
-    - box = uplet (left, upper, right, lower)], 
+  - box = uplet (left, upper, right, lower)], 
   
   [`Image.paste(im, box=None, mask=None)`],
-  [copie l'image im sur cet image
-   - box = uplet (left, upper) ou (left, upper, right, lower)], 
+  [copie l'image `im` sur cet image
+  - box = uplet (left, upper) ou (left, upper, right, lower)], 
   
   [`Image.save(fp, format=None, **params)`],
   [enregistre l'image sous le nom `fp`], 
