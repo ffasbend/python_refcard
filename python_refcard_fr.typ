@@ -1,4 +1,3 @@
-//#import "template.typ": *
 #import "@preview/tablex:0.0.6": tablex, colspanx, rowspanx, vlinex, hlinex
 
 /* --- page layout --- */
@@ -19,11 +18,28 @@
 #let al = { 
   text(font:"Wingdings", "\u{f0ef}")
 }
+// 1em space
 #let quad = sym.space.quad // 1em space
+
+#show "1er": it => box[
+  1#super[er]
+]
+#show "1ère": it => box[
+  1#super[ère]
+]
+#show "2e": it => box[
+  2#super[e]
+]
+#show "1st": it => box[
+  1#super[st]
+]
+#show "2nd": it => box[
+  2#super[nd]
+]
 
 /* --- page header --- */
 #set page(header: rect(stroke:(top:0pt, bottom:0.6pt), inset:(x:0pt, y:3pt))[
-  #smallcaps[Python 3 - Refcard] v2.8.14 (1#super[ère] et 2#super[e] B)
+  #smallcaps[Python 3 - Refcard] v3.0.0 (1ère et 2e B)
   #h(1fr)
   Page #counter(page).display(
     "1/1",
@@ -125,10 +141,10 @@
 == Conversion de type
 #syntaxTable(
   [`int(s)`],
-  [convertir chaîne s en nombre entier],
+  [convertir chaîne `s` en nombre entier],
   
   [`float(s)`],
-  [convertir chaîne s en nombre décimal],
+  [convertir chaîne `s` en nombre décimal],
   
   [`str(number)`],
   [convertir nombre entier/décimal en string],
@@ -161,7 +177,7 @@ Certains mots réservés ne sont pas autorisés :
   #ar minuscules + blanc souligné],
   
   [`MAX_SIZE`],
-  [(pseudo) constantes #ar majuscules et blanc souligné)],
+  [(pseudo) constantes #ar majuscules et blanc souligné],
   
   [CamelCase],
   [nom des classes #ar CamelCase], 
@@ -169,6 +185,8 @@ Certains mots réservés ne sont pas autorisés :
 
 = #smallcaps()[Chaînes de caractères (=séquences non-modifiables, immutable)]
 *Les caractères d'une chaîne ne peuvent pas être modifiés.* Python ne connaît pas de caractères. Un caractère isolé = chaîne de longueur 1. Dans les exemples suivants : `s` = chaîne de caractères
+- `ord('A')` #ar return integer Unicode code point for char (e.g. 65)
+- `chr(65)` #ar return string representing char at that point (e.g. 'A')
 
 == String literals
 #syntaxTable(
@@ -232,7 +250,7 @@ Placeholder options
 
 #tablex(
 //  columns: (auto,  1fr, 1fr),  // 4 columns
-  columns: (auto, auto, 1fr, auto, 1fr),
+  columns: (auto, 2em, 1fr, 2em, 1fr),
   rows: auto,  // at least 1 row of auto size
   align: left + top,
   stroke: black + 0.5pt,
@@ -247,7 +265,7 @@ Placeholder options
   hlinex(start: 1, end: 5),
 )
 
-Utiliser une variable `var1` dans format-spec :   `"…{:{var1}}…".format(…, var1 = value, …)`
+Utiliser une variable `var1` dans `format-spec` :   `"…{:{var1}}…".format(…, var1 = value, …)`
 
 == Méthodes
 
@@ -255,11 +273,8 @@ Utiliser une variable `var1` dans format-spec :   `"…{:{var1}}…".format(…,
   [`s.capitalize()`],
   [renvoie une copie avec le premier caractère en majuscule],
   
-  [`s.lower()`],
-  [renvoie une copie en lettres minuscules],
-  
-  [`s.upper()`],
-  [renvoie une copie en lettres majuscules],
+  [`s.lower() | s.upper()`],
+  [renvoie une copie en lettres minuscules | majuscules],
   
   [`s.strip()`],
   [renvoie une copie et enlève les caractères invisibles (whitespace) au début et à la fin de `s`], 
@@ -271,10 +286,10 @@ Utiliser une variable `var1` dans format-spec :   `"…{:{var1}}…".format(…,
   [renvoie une liste des mots (délimités par whitespace), pas de mots vides],
   
   [`s.split(sep)`],
-  [renvoie une liste des mots (délimités par sep), sous-chaînes vides si plusieurs sep consécutifs],
+  [renvoie une liste des mots (délimités par sep), sous-chaînes vides si plusieurs `sep` consécutifs],
   
   [`s.find(sub[, start[, end]])`],
-  [renvoie l'indice de la 1ère occurrence de sub dans la sous-chaîne `[start:end]` de `s`, renvoie `-1` si pas trouvé],
+  [renvoie l'indice de la 1ère occurrence de `sub` dans la sous-chaîne `[start:end]` de `s`, renvoie `-1` si pas trouvé],
   
   [`s.index(sub[, start[, end]])`],
   [idem, mais exception `ValueError` si pas trouvé],
@@ -307,8 +322,8 @@ Utiliser une variable `var1` dans format-spec :   `"…{:{var1}}…".format(…,
    `"xx".join("123")` #ar `"1xx2xx3"`],
   [returns a string created by joining the elements of an iterable by string separator],
   
-  [`s.join([str(elem) for elem in lst ])`],
-  [convertir liste en chaîne avec séparateur s],
+  [`s.join([str(elem) for elem in lst])`],
+  [convertir liste en chaîne avec séparateur `s`],
 )
 
 = #smallcaps[Listes (=séquences modifiables)] #ar [] #h(1fr) type: list
@@ -321,11 +336,11 @@ Dans une même liste #ar variables de différents types = possible.
   [`lst = []`],
   [créer une liste vide],
   
-  [`lst = [item1, item2, … ] 	lst = [23, 45]`],
+  [`lst = [item1, item2, … ] , lst = [23, 45]`],
   [créer une liste avec des éléments],
   
   [`new_lst = lst1 + lst2   ( = [*lst1, *lst2] )`],
-  [#alert[Attention] : crée une nouvelle liste],
+  [#alert[Attention] : *crée une nouvelle liste*],
   
   [`list(x), ex : lst = list(range(5))`],
   [Convertir uplet, range ou semblable en liste],
@@ -382,7 +397,7 @@ Exemple : création d'une matrice 3x3
   [sous-liste à partir de l'indice 2 jusqu'à l'avant dernier],
   
   [`lst[:4]`],
-  [sous-liste à partir du début jusqu'à indice 3],
+  [sous-liste à partir du début jusqu'à l'indice 3],
   
   [`lst[4:]`],
   [sous-liste à partir de l'indice 4 jusqu'à la fin],
@@ -445,7 +460,7 @@ Pour copier une liste
   [inverse les items d'une liste (modifie la liste)],
   
   [`new_lst = reversed(lst)`],
-  [retourne une liste inversée (lst = unchanged)],
+  [retourne une liste inversée (`lst` = unchanged)],
   
   [`lst.sort()`],
   [trier la liste (modifie la liste)], 
@@ -454,10 +469,10 @@ Pour copier une liste
   [retourne une liste triée (`lst` = unchanged)], 
   
   [`lst.insert(index, item)`],
-  [insère l'item à la position donnée par `index`], 
+  [insère l'`item` à la position donnée par `index`], 
 )
 
-Attention:
+Attention :
 
 #tablex(
   columns: (auto,  1fr),  // 4 columns
@@ -493,13 +508,13 @@ Attention:
   [retourne l'index de la 1ère occurrence de item, sinon #ar exception `ValueError`],
   
   [`item in lst         (item not in lst)`],
-  [indique si l'item se trouve dans `lst`  (n'est pas dans)],
+  [indique si l'`item` se trouve dans `lst`  (n'est pas dans)],
   
   [`min(lst)  /  max(lst)`],
   [retourne l'élément avec la valeur min. / max.],
   
   [`sum(lst[,start])`],
-  [retourne la somme à partir de `start` (=0 par défaut)],
+  [retourne la somme à partir de `start` (= 0 par défaut)],
   
   [`for item in lst:`],
   [parcourir les éléments],
@@ -541,7 +556,7 @@ Retourne une séquence non modifiable d'entiers
    (start, stop, step = integers)
    ],
   [retourne une séquence d'entiers sans la valeur `stop`\
-   `range(n)`#ar [0,1,2, …, n-1], ex `range(3)` #ar [0, 1, 2] \
+   `range(n)`#ar [0,1,2, …, n-1], #quad ex.: `range(3)` #ar [0, 1, 2] \
    `range(2, 5)` #ar [2, 3, 4] \
    `range(0, -10, -2)` #ar [0, -2, 4, -6, -8]
    ],
@@ -569,7 +584,7 @@ Uplet = collection d'éléments séparés par des virgules. Comme les chaînes *
 )
 
 == Affichage #ar voir listes
-Premier élément d'un uplet -> index 0
+Premier élément d'un uplet #ar index 0
 #syntaxTable(
   [`tuple[index]`],
   [retourne l'élément à la position index \
@@ -599,24 +614,24 @@ Les dictionnaires sont modifiables, mais pas des séquences. L'ordre des éléme
 == Affichage
 #syntaxTable(
   [`dic[key]`],
-  [retourne la valeur de la clé keys. Si la clé n'existe pas une exception `KeyError` est levée],
+  [retourne la valeur de la clé `keys`. Si la clé n'existe pas une exception `KeyError` est levée],
 
   [`dic.get(key, default = None)`],
   [retourne la valeur de la clé, sinon `None` (ou la valeur spécifiée comme 2e paramètre de `get`)],
 
   [`dic.keys()` \
-   `list(dic.keys())` #quad ou #quad`list(dic)` \
+   `list(dic.keys())` #quad ou #h(1fr)`list(dic)` \
    `tuple(dic.keys())` \
-   `sorted(dic.keys()), sorted(dic)`], 
+   `sorted(dic.keys())` #h(1fr) `sorted(dic)`], 
   [retourne les clés du dictionnaire \
    … comme liste \
    … comme uplet \
    renvoie une liste des clés dans l'ordre lexicographique],
 
-  [`dic.values()`#quad `list(dic.values())`],
+  [`dic.values()`#quad #quad #h(1fr) `list(dic.values())`],
   [renvoie les valeurs du dictionnaire / comme liste],
 
-  [`dic.items()` #quad `list(dic.items())`],
+  [`dic.items()` #h(1fr) `list(dic.items())`],
   [renvoie les éléments du dictionnaire sous forme d'une séquence de couples / d'une liste de couples],
 )
 
@@ -625,18 +640,18 @@ Les dictionnaires sont modifiables, mais pas des séquences. L'ordre des éléme
   [`dic[key] = value`],
   [ajouter une `clé:valeur` au dictionnaire, si la clé n'existe pas encore (sinon elle est remplacée)],
   
-  [`del dic[key]` ou `del(dic[key])`],
-  [supprime la clé key du dictionnaire],
+  [`del dic[key]` #quad ou #quad `del(dic[key])`],
+  [supprime la clé `key` du dictionnaire],
   
   [`dic.pop(key)`],
-  [supprime la clé key du dictionnaire et renvoie la valeur supprimée],
+  [supprime la clé `key` du dictionnaire et renvoie la valeur supprimée],
 )
 
 == Divers
 
 #syntaxTable(
   [`len(dic)`],
-  [renvoie le nombre d'éléments tans le dictionnaire],
+  [renvoie le nombre d'éléments dans le dictionnaire],
   
   [`if key in dic: , if key not in dic`],
   [tester si le dictionnaire contient une certaine clé],
@@ -658,7 +673,7 @@ Les dictionnaires sont modifiables, mais pas des séquences. L'ordre des éléme
   [retourne la clé la plus longue],
   
   [`dic1.update(dic2)`],
-  [combine 2 dictionnaires en un seul (dic1), les clés de dic2 sont prioritaires],
+  [combine 2 dictionnaires en un seul (`dic1`), les clés de `dic2` sont prioritaires],
 )
 
 = Expressions et opérateurs
@@ -667,7 +682,7 @@ Opérateurs entourés d'espaces. Utiliser des parenthèses pour grouper des opé
 == Opérateurs mathématiques
 La 1ère colonne indique la priorité des opérateurs
 
-#syntaxTable(columns: (auto, auto, 1fr),
+#syntaxTable(columns: (auto, 3em, 1fr),
   [1.],
   [`**`],
   [exponentiation #h(1fr) `6 ** 4` #ar `1296`],
@@ -707,7 +722,7 @@ La 1ère colonne indique la priorité des opérateurs
 
 retournent `True` ou `1` si l'expression est vérifiée, sinon `False` ou `0`
 
-#syntaxTable(columns: (auto, auto, 1fr),
+#syntaxTable(columns: (auto, 3em, 1fr),
   [5.],
   [`==`],
   [égal à],
@@ -730,7 +745,7 @@ retournent `True` ou `1` si l'expression est vérifiée, sinon `False` ou `0`
 
   [],
   [`<=`],
-  [inférieur ou égal à #h(1fr) (exemple : #quad `x <= b` #quad  ou #quad  `a <= x <=b`)], 
+  [inférieur ou égal à #h(1fr) (exemple : #quad `x <= b` #quad  ou #quad  `a <= x <= b`)], 
 )
 chaînes de caractères #ar ordre lexicographique, majuscules précèdent les minuscules
 
@@ -740,16 +755,16 @@ chaînes de caractères #ar ordre lexicographique, majuscules précèdent les mi
 #syntaxTable(columns: (auto, auto, 1fr),
   [6.],
   [`not x`],
-  [non (retourne `True`, si `x` est faux, sinon `False`)],
+  [*non* (retourne `True`, si `x` est faux, sinon `False`)],
   
   [7.],
   [`x and y`],
-  [et (retourne `x`, si `x` est faux, sinon `y`) \
+  [*et* (retourne `x`, si `x` est faux, sinon `y`) \
    `and` ne vérifie le 2e argument que si le 1er argument est vrai],
   
   [8.],
   [`x or y`],
-  [ou (retourne `y`, si `x` est faux, sinon `x`) \
+  [*ou* (retourne `y`, si `x` est faux, sinon `x`) \
    `or` ne vérifie le 2e argument que si le 1er argument est faux],
 )
 == Affectation
@@ -866,7 +881,7 @@ L'affectation attribue un type bien déterminé à une variable.
    - nombre de répétitions != connu au départ],
 )
 
-A l’intérieur d’une boucle for ou while 
+A l'intérieur d'une boucle *for* ou *while* 
 
 #syntaxTable(
   [`break`],
@@ -889,7 +904,8 @@ Le code de la fonction doit être placé plus haut dans le code source (avant l'
   def my_function(par1, …, par_n):
     instruction(s)
     …
-  return var```],
+    return var
+  ```],
   [définit une fonction `my_function` \
    - `par1 … par_n` sont les paramètres \
    - une ou plusieurs instructions `return…` \
@@ -898,7 +914,8 @@ Le code de la fonction doit être placé plus haut dans le code source (avant l'
   
   [```
   my_function(arg1, … arg_n)
-  var = my_function(arg1, … arg_n)```],
+  var = my_function(arg1, … arg_n)
+  ```],
   [appel de la fonction, arguments affectés aux paramètres dans le même ordre d'apparition],
   
   [`my_function(*lst)`],
@@ -911,10 +928,11 @@ Le code de la fonction doit être placé plus haut dans le code source (avant l'
   def func(par1, …, par_n = val):
   ex : def add(elem, to = None):
           if to is None:
-              to = []```],
+              to = []
+  ```],
   [paramètre par défaut \
   #alert[ATTENTION:] \
-  `def add(elem, to = []):` \
+  `  def add(elem, to = []):` \
   #alert[does not work, because python default args, are only evaluated once, and used for all function calls]], 
 
   [`def func(par1, …, *par_n):`],
@@ -944,7 +962,8 @@ Les paramètres et variables locales cachent les variables globales/extérieures
   [`import module as name`],
   [],
   
-  [`from module import *` #alert[à éviter]],
+  [`from module import *` \
+   #alert[`*** à éviter ***`]],
   [intègre toutes les méthodes de module, pas besoin de préfixer le nom du module \
    ex : `from math import *` #ar `sqrt()`],
   
@@ -1017,7 +1036,7 @@ import math
   [`random.randrange(stop)` \
    `random.randrange(start, stop)`\
    `radnom.randrange(start, stop, step)`],
-  [retourne un entier au hasard de `[start ; stop[`. Seuls les multiples de `step` sont possibles.
+  [retourne un entier au hasard de `[start ; stop[`. Seuls les multiples de `step` sont possibles. \
   (`start` = 0, `step` = 1 par défaut)], 
   
   [`random.shuffle(seq)`],
@@ -1247,8 +1266,6 @@ Instanciation #ar création d'un objet à partir d'une classe existante (chaque 
   def method1(self, …):
     …
     return result
-  obj = ClassName(…)
-  obj.method(…)
   ```],
   [définit la classe `ClassName` (CamelCase) \
   les fonctions sont appelées *méthodes*
@@ -1271,7 +1288,7 @@ Instanciation #ar création d'un objet à partir d'une classe existante (chaque 
 = Récursivité
 - Algorithme récursif #ar algorithme qui fait appel(s) à lui-même
 - Attention : il faut prévoir une condition d'arrêt (= cas de base)
-- Pour changer la limite max. de récursions #ar voir module sys
+- Pour changer la limite max. de récursions #ar voir module *sys*
 
 #colbreak()
 = #smallcaps[Pygame] #h(1fr) #smallcaps[bibliothèque pour créer des jeux]
@@ -1296,7 +1313,7 @@ Instanciation #ar création d'un objet à partir d'une classe existante (chaque 
   ```],
   [`# Création de la surface de dessin` \
   définir la largeur (0…WIDTH-1) et la hauteur (0…HEIGHT-1) de la fenêtre
-  et retourner un objet de type surface
+  et retourner un objet de type `surface`
   ],
   
   [`pygame.display.set_caption(str)`],
@@ -1314,14 +1331,14 @@ Instanciation #ar création d'un objet à partir d'une classe existante (chaque 
   clock = pygame.time.Clock()
   ```],
   [`# Fréquence d'image` \
-  créer l'objet clock avant la boucle
+  créer l'objet `clock` avant la boucle
   ], 
   
   [```
   done = False
   while not done:
   ```],
-  [`# Boucle principale`
+  [`# Boucle principale` \
   boucle principale (infinie)
   ], 
   
@@ -1394,8 +1411,8 @@ Instanciation #ar création d'un objet à partir d'une classe existante (chaque 
   `K_a`, `K_b`, …	#h(1fr) touche a, b,… (pareil pour le reste de l'alphabet) \
   `K_0`, `K_1`, …	#h(1fr) touche 0, 1, … en haut (pareil pour les autres chiffres) \
   `K_KP0`, `K_KP1`, …	#h(1fr) touche 0, 1, … sur pavé numérique (pareil …) \
-  `K_LALT`, `K_RALT` #h(1fr)	touche ALT (à gauche | à droite)\
-  `K_LSHIFT`, `K_RSHIFT` #h(1fr)	touche SHIFT \
+  `K_LALT`, `K_RALT` #h(1fr)	touche ALT (à gauche | à droite) \
+  `K_LSHIFT`, `K_RSHIFT` #h(1fr)	touche SHIFT (à gauche | à droite) \
   `K_LCTRL`, `K_RCTRL` #h(1fr)	touche CONTROL (à gauche | à droite) \
   `K_SPACE`	#h(1fr) touche espace \
   `K_RETURN` #h(1fr)	touche ENTER \
@@ -1515,10 +1532,10 @@ Obtenir la couleur d'un point (pixel)
 Effacer/Remplir surface de dessin
 
 #syntaxTable(
-  [`screen.fill(Color("black"))`   #quad   `screen.fill("black")`],
+  [`screen.fill("black")`   #quad   `screen.fill(Color("black"))`],
   [remplir arrière-plan en noir], 
 
-  [`screen.fill(Color("white"))`  #quad   `screen.fill("white")`],
+  [`screen.fill("white")`  #quad   `screen.fill(Color("white"))`],
   [remplir arrière-plan en blanc], 
 )
 
@@ -1650,7 +1667,7 @@ avant la boucle principale
   
   [`screen.blit(source, dest[, area,`\
   `  special_flags])`],
-  [copie la surface source sur la surface screen à la position `dest` (coin sup. gauche)],
+  [copie la surface `source` sur la surface `screen` à la position `dest` (coin sup. gauche)],
   
   [`pygame.display.update()`],
   [met à jour la surface de dessin], 
@@ -1821,12 +1838,711 @@ Set items are unordered, unchangeable and do not allow duplicate values. Items c
 #h(1fr)#link("https://github.com/pygame/pygame/blob/main/src_py/colordict.py")
 
 == grey or gray
-#image("pics/colors_grey.png")
+//#image("pics/colors_grey.png")
+#{
+  set rect(width: 1.5em, height: 1.5em, stroke:0.5pt+gray)
+  tablex(
+    columns: 21,     // 2 means 2 auto-sized columns
+    gutter: 0.8mm,    // space between columns
+    align: center+horizon,
+    auto-lines: false,
+    inset: (x: 0em, y: 0em),
+  
+    [],[0],[1],[2],[3],[4],[5],[6],[7],[8],[9],[10],[11],[12],[13],[14],[15],[16],[17],[18],[19],
+    [grey0],
+    [#rect(fill:rgb("#000000"))], 
+    [#rect(fill:rgb("#030303"))], 
+    [#rect(fill:rgb("#050505"))], 
+    [#rect(fill:rgb("#080808"))], 
+    [#rect(fill:rgb("#0A0A0A"))], 
+    [#rect(fill:rgb("#0D0D0D"))], 
+    [#rect(fill:rgb("#0F0F0F"))], 
+    [#rect(fill:rgb("#121212"))], 
+    [#rect(fill:rgb("#141414"))], 
+    [#rect(fill:rgb("#171717"))], 
+    [#rect(fill:rgb("#1A1A1A"))], 
+    [#rect(fill:rgb("#1C1C1C"))], 
+    [#rect(fill:rgb("#1F1F1F"))], 
+    [#rect(fill:rgb("#212121"))], 
+    [#rect(fill:rgb("#242424"))], 
+    [#rect(fill:rgb("#262626"))], 
+    [#rect(fill:rgb("#292929"))], 
+    [#rect(fill:rgb("#2B2B2B"))], 
+    [#rect(fill:rgb("#2E2E2E"))], 
+    [#rect(fill:rgb("#303030"))],
 
-color, color1, … , color4
+    [grey20],
+    [#rect(fill:rgb("#333333"))], 
+    [#rect(fill:rgb("#363636"))], 
+    [#rect(fill:rgb("#383838"))], 
+    [#rect(fill:rgb("#3B3B3B"))], 
+    [#rect(fill:rgb("#3D3D3D"))], 
+    [#rect(fill:rgb("#404040"))], 
+    [#rect(fill:rgb("#424242"))], 
+    [#rect(fill:rgb("#454545"))], 
+    [#rect(fill:rgb("#474747"))], 
+    [#rect(fill:rgb("#4A4A4A"))], 
+    [#rect(fill:rgb("#4D4D4D"))], 
+    [#rect(fill:rgb("#4F4F4F"))], 
+    [#rect(fill:rgb("#525252"))], 
+    [#rect(fill:rgb("#545454"))], 
+    [#rect(fill:rgb("#575757"))], 
+    [#rect(fill:rgb("#595959"))], 
+    [#rect(fill:rgb("#5C5C5C"))], 
+    [#rect(fill:rgb("#5E5E5E"))], 
+    [#rect(fill:rgb("#616161"))], 
+    [#rect(fill:rgb("#636363"))], 
 
-#image("pics/colors_4levels.png", width:9cm)
-#image("pics/colors_other.png", height:8cm)
+    [grey40],
+    [#rect(fill:rgb("#666666"))], 
+    [#rect(fill:rgb("#696969"))], 
+    [#rect(fill:rgb("#6B6B6B"))], 
+    [#rect(fill:rgb("#6E6E6E"))], 
+    [#rect(fill:rgb("#707070"))], 
+    [#rect(fill:rgb("#737373"))], 
+    [#rect(fill:rgb("#757575"))], 
+    [#rect(fill:rgb("#787878"))], 
+    [#rect(fill:rgb("#7A7A7A"))], 
+    [#rect(fill:rgb("#7D7D7D"))], 
+    [#rect(fill:rgb("#7F7F7F"))], 
+    [#rect(fill:rgb("#828282"))], 
+    [#rect(fill:rgb("#858585"))], 
+    [#rect(fill:rgb("#878787"))], 
+    [#rect(fill:rgb("#8A8A8A"))], 
+    [#rect(fill:rgb("#8C8C8C"))], 
+    [#rect(fill:rgb("#8F8F8F"))], 
+    [#rect(fill:rgb("#919191"))], 
+    [#rect(fill:rgb("#949494"))], 
+    [#rect(fill:rgb("#969696"))], 
+
+    [grey60],
+    [#rect(fill:rgb("#999999"))], 
+    [#rect(fill:rgb("#9C9C9C"))], 
+    [#rect(fill:rgb("#9E9E9E"))], 
+    [#rect(fill:rgb("#A1A1A1"))], 
+    [#rect(fill:rgb("#A3A3A3"))], 
+    [#rect(fill:rgb("#A6A6A6"))], 
+    [#rect(fill:rgb("#A8A8A8"))], 
+    [#rect(fill:rgb("#ABABAB"))], 
+    [#rect(fill:rgb("#ADADAD"))], 
+    [#rect(fill:rgb("#B0B0B0"))], 
+    [#rect(fill:rgb("#B3B3B3"))], 
+    [#rect(fill:rgb("#B5B5B5"))], 
+    [#rect(fill:rgb("#B8B8B8"))], 
+    [#rect(fill:rgb("#BABABA"))], 
+    [#rect(fill:rgb("#BDBDBD"))], 
+    [#rect(fill:rgb("#BFBFBF"))], 
+    [#rect(fill:rgb("#C2C2C2"))], 
+    [#rect(fill:rgb("#C4C4C4"))], 
+    [#rect(fill:rgb("#C7C7C7"))], 
+    [#rect(fill:rgb("#C9C9C9"))], 
+
+    [grey80],
+    [#rect(fill:rgb("#CCCCCC"))], 
+    [#rect(fill:rgb("#CFCFCF"))], 
+    [#rect(fill:rgb("#D1D1D1"))], 
+    [#rect(fill:rgb("#D4D4D4"))], 
+    [#rect(fill:rgb("#D6D6D6"))], 
+    [#rect(fill:rgb("#D9D9D9"))], 
+    [#rect(fill:rgb("#DBDBDB"))], 
+    [#rect(fill:rgb("#DEDEDE"))], 
+    [#rect(fill:rgb("#E0E0E0"))], 
+    [#rect(fill:rgb("#E3E3E3"))], 
+    [#rect(fill:rgb("#E5E5E5"))], 
+    [#rect(fill:rgb("#E8E8E8"))], 
+    [#rect(fill:rgb("#EBEBEB"))], 
+    [#rect(fill:rgb("#EDEDED"))], 
+    [#rect(fill:rgb("#F0F0F0"))], 
+    [#rect(fill:rgb("#F2F2F2"))], 
+    [#rect(fill:rgb("#F5F5F5"))], 
+    [#rect(fill:rgb("#F7F7F7"))], 
+    [#rect(fill:rgb("#FAFAFA"))], 
+    [#rect(fill:rgb("#FCFCFC"))], 
+  )
+}
+== color, color1, … , color4
+
+//#image("pics/colors_4levels.png", width:9cm)
+#box(height:8.8cm,
+  columns(3, gutter:1em)[
+
+    #set rect(width: 0.8em, height: 1.2em, stroke:0.5pt+gray)
+    #tablex(
+      columns: 6,     // 2 means 2 auto-sized columns
+      gutter: 0.5mm,    // space between columns
+      align: horizon,
+      auto-lines: false,
+      inset: (x: 0em, y: 0em),
+
+
+      [], [], [1], [2], [3], [4], 
+      [antiquewhite],
+      [#rect(fill:rgb("#FAEBD7"))], 
+      [#rect(fill:rgb("#FFEFDB"))], 
+      [#rect(fill:rgb("#EEDFCC"))], 
+      [#rect(fill:rgb("#CDC0B0"))], 
+      [#rect(fill:rgb("#8B8378"))], 
+      [aquamarine],
+      [#rect(fill:rgb("#7FFFD4"))], 
+      [#rect(fill:rgb("#7FFFD4"))], 
+      [#rect(fill:rgb("#76EEC6"))], 
+      [#rect(fill:rgb("#66CDAA"))], 
+      [#rect(fill:rgb("#458B74"))], 
+      [azure],
+      [#rect(fill:rgb("#F0FFFF"))], 
+      [#rect(fill:rgb("#F0FFFF"))], 
+      [#rect(fill:rgb("#E0EEEE"))], 
+      [#rect(fill:rgb("#C1CDCD"))], 
+      [#rect(fill:rgb("#838B8B"))], 
+      [bisque],
+      [#rect(fill:rgb("#FFE4C4"))], 
+      [#rect(fill:rgb("#FFE4C4"))], 
+      [#rect(fill:rgb("#EED5B7"))], 
+      [#rect(fill:rgb("#CDB79E"))], 
+      [#rect(fill:rgb("#8B7D6B"))], 
+      [blue],
+      [#rect(fill:rgb("#0000FF"))], 
+      [#rect(fill:rgb("#0000FF"))], 
+      [#rect(fill:rgb("#0000EE"))], 
+      [#rect(fill:rgb("#0000CD"))], 
+      [#rect(fill:rgb("#00008B"))], 
+      [brown],
+      [#rect(fill:rgb("#A52A2A"))], 
+      [#rect(fill:rgb("#FF4040"))], 
+      [#rect(fill:rgb("#EE3B3B"))], 
+      [#rect(fill:rgb("#CD3333"))], 
+      [#rect(fill:rgb("#8B2323"))], 
+      [burlywood],
+      [#rect(fill:rgb("#DEB887"))], 
+      [#rect(fill:rgb("#FFD39B"))], 
+      [#rect(fill:rgb("#EEC591"))], 
+      [#rect(fill:rgb("#CDAA7D"))], 
+      [#rect(fill:rgb("#8B7355"))], 
+      [cadetblue],
+      [#rect(fill:rgb("#5F9EA0"))], 
+      [#rect(fill:rgb("#98F5FF"))], 
+      [#rect(fill:rgb("#8EE5EE"))], 
+      [#rect(fill:rgb("#7AC5CD"))], 
+      [#rect(fill:rgb("#53868B"))], 
+      [chartreuse],
+      [#rect(fill:rgb("#7FFF00"))], 
+      [#rect(fill:rgb("#7FFF00"))], 
+      [#rect(fill:rgb("#76EE00"))], 
+      [#rect(fill:rgb("#66CD00"))], 
+      [#rect(fill:rgb("#458B00"))], 
+      [chocolate],
+      [#rect(fill:rgb("#D2691E"))], 
+      [#rect(fill:rgb("#FF7F24"))], 
+      [#rect(fill:rgb("#EE7621"))], 
+      [#rect(fill:rgb("#CD661D"))], 
+      [#rect(fill:rgb("#8B4513"))], 
+      [coral],
+      [#rect(fill:rgb("#FF7F50"))], 
+      [#rect(fill:rgb("#FF7256"))], 
+      [#rect(fill:rgb("#EE6A50"))], 
+      [#rect(fill:rgb("#CD5B45"))], 
+      [#rect(fill:rgb("#8B3E2F"))], 
+      [cornsilk],
+      [#rect(fill:rgb("#FFF8DC"))], 
+      [#rect(fill:rgb("#FFF8DC"))], 
+      [#rect(fill:rgb("#EEE8CD"))], 
+      [#rect(fill:rgb("#CDC8B1"))], 
+      [#rect(fill:rgb("#8B8878"))], 
+      [cyan],
+      [#rect(fill:rgb("#00FFFF"))], 
+      [#rect(fill:rgb("#00FFFF"))], 
+      [#rect(fill:rgb("#00EEEE"))], 
+      [#rect(fill:rgb("#00CDCD"))], 
+      [#rect(fill:rgb("#008B8B"))], 
+      [darkgoldenrod],
+      [#rect(fill:rgb("#B8860B"))], 
+      [#rect(fill:rgb("#FFB90F"))], 
+      [#rect(fill:rgb("#EEAD0E"))], 
+      [#rect(fill:rgb("#CD950C"))], 
+      [#rect(fill:rgb("#8B6508"))], 
+      [darkolivegreen],
+      [#rect(fill:rgb("#556B2F"))], 
+      [#rect(fill:rgb("#CAFF70"))], 
+      [#rect(fill:rgb("#BCEE68"))], 
+      [#rect(fill:rgb("#A2CD5A"))], 
+      [#rect(fill:rgb("#6E8B3D"))], 
+      [darkorange],
+      [#rect(fill:rgb("#FF8C00"))], 
+      [#rect(fill:rgb("#FF7F00"))], 
+      [#rect(fill:rgb("#EE7600"))], 
+      [#rect(fill:rgb("#CD6600"))], 
+      [#rect(fill:rgb("#8B4500"))], 
+      [darkorchid],
+      [#rect(fill:rgb("#9932CC"))], 
+      [#rect(fill:rgb("#BF3EFF"))], 
+      [#rect(fill:rgb("#B23AEE"))], 
+      [#rect(fill:rgb("#9A32CD"))], 
+      [#rect(fill:rgb("#68228B"))], 
+      [darkseagreen],
+      [#rect(fill:rgb("#8FBC8F"))], 
+      [#rect(fill:rgb("#C1FFC1"))], 
+      [#rect(fill:rgb("#B4EEB4"))], 
+      [#rect(fill:rgb("#9BCD9B"))], 
+      [#rect(fill:rgb("#698B69"))], 
+      [darkslategray],
+      [#rect(fill:rgb("#2F4F4F"))], 
+      [#rect(fill:rgb("#97FFFF"))], 
+      [#rect(fill:rgb("#8DEEEE"))], 
+      [#rect(fill:rgb("#79CDCD"))], 
+      [#rect(fill:rgb("#528B8B"))], 
+      [deeppink],
+      [#rect(fill:rgb("#FF1493"))], 
+      [#rect(fill:rgb("#FF1493"))], 
+      [#rect(fill:rgb("#EE1289"))], 
+      [#rect(fill:rgb("#CD1076"))], 
+      [#rect(fill:rgb("#8B0A50"))], 
+      [deepskyblue],
+      [#rect(fill:rgb("#00BFFF"))], 
+      [#rect(fill:rgb("#00BFFF"))], 
+      [#rect(fill:rgb("#00B2EE"))], 
+      [#rect(fill:rgb("#009ACD"))], 
+      [#rect(fill:rgb("#00688B"))], 
+      [dodgerblue],
+      [#rect(fill:rgb("#1E90FF"))], 
+      [#rect(fill:rgb("#1E90FF"))], 
+      [#rect(fill:rgb("#1C86EE"))], 
+      [#rect(fill:rgb("#1874CD"))], 
+      [#rect(fill:rgb("#104E8B"))], 
+      [firebrick],
+      [#rect(fill:rgb("#B22222"))], 
+      [#rect(fill:rgb("#FF3030"))], 
+      [#rect(fill:rgb("#EE2C2C"))], 
+      [#rect(fill:rgb("#CD2626"))], 
+      [#rect(fill:rgb("#8B1A1A"))], 
+      [gold],
+      [#rect(fill:rgb("#FFD700"))], 
+      [#rect(fill:rgb("#FFD700"))], 
+      [#rect(fill:rgb("#EEC900"))], 
+      [#rect(fill:rgb("#CDAD00"))], 
+      [#rect(fill:rgb("#8B7500"))], 
+      [goldenrod],
+      [#rect(fill:rgb("#DAA520"))], 
+      [#rect(fill:rgb("#FFC125"))], 
+      [#rect(fill:rgb("#EEB422"))], 
+      [#rect(fill:rgb("#CD9B1D"))], 
+      [#rect(fill:rgb("#8B6914"))], 
+      [green],
+      [#rect(fill:rgb("#00FF00"))], 
+      [#rect(fill:rgb("#00FF00"))], 
+      [#rect(fill:rgb("#00EE00"))], 
+      [#rect(fill:rgb("#00CD00"))], 
+      [#rect(fill:rgb("#008B00"))], 
+
+      [], [], [1], [2], [3], [4], 
+      [honeydew],
+      [#rect(fill:rgb("#F0FFF0"))], 
+      [#rect(fill:rgb("#F0FFF0"))], 
+      [#rect(fill:rgb("#E0EEE0"))], 
+      [#rect(fill:rgb("#C1CDC1"))], 
+      [#rect(fill:rgb("#838B83"))], 
+      [hotpink],
+      [#rect(fill:rgb("#FF69B4"))], 
+      [#rect(fill:rgb("#FF6EB4"))], 
+      [#rect(fill:rgb("#EE6AA7"))], 
+      [#rect(fill:rgb("#CD6090"))], 
+      [#rect(fill:rgb("#8B3A62"))], 
+      [indianred],
+      [#rect(fill:rgb("#CD5C5C"))], 
+      [#rect(fill:rgb("#FF6A6A"))], 
+      [#rect(fill:rgb("#EE6363"))], 
+      [#rect(fill:rgb("#CD5555"))], 
+      [#rect(fill:rgb("#8B3A3A"))], 
+      [ivory],
+      [#rect(fill:rgb("#FFFFF0"))], 
+      [#rect(fill:rgb("#FFFFF0"))], 
+      [#rect(fill:rgb("#EEEEE0"))], 
+      [#rect(fill:rgb("#CDCDC1"))], 
+      [#rect(fill:rgb("#8B8B83"))], 
+      [khaki],
+      [#rect(fill:rgb("#F0E68C"))], 
+      [#rect(fill:rgb("#FFF68F"))], 
+      [#rect(fill:rgb("#EEE685"))], 
+      [#rect(fill:rgb("#CDC673"))], 
+      [#rect(fill:rgb("#8B864E"))], 
+      [lavenderblush],
+      [#rect(fill:rgb("#FFF0F5"))], 
+      [#rect(fill:rgb("#FFF0F5"))], 
+      [#rect(fill:rgb("#EEE0E5"))], 
+      [#rect(fill:rgb("#CDC1C5"))], 
+      [#rect(fill:rgb("#8B8386"))], 
+      [lemonchiffon],
+      [#rect(fill:rgb("#FFFACD"))], 
+      [#rect(fill:rgb("#FFFACD"))], 
+      [#rect(fill:rgb("#EEE9BF"))], 
+      [#rect(fill:rgb("#CDC9A5"))], 
+      [#rect(fill:rgb("#8B8970"))], 
+      [lightblue],
+      [#rect(fill:rgb("#ADD8E6"))], 
+      [#rect(fill:rgb("#BFEFFF"))], 
+      [#rect(fill:rgb("#B2DFEE"))], 
+      [#rect(fill:rgb("#9AC0CD"))], 
+      [#rect(fill:rgb("#68838B"))], 
+      [lightcyan],
+      [#rect(fill:rgb("#E0FFFF"))], 
+      [#rect(fill:rgb("#E0FFFF"))], 
+      [#rect(fill:rgb("#D1EEEE"))], 
+      [#rect(fill:rgb("#B4CDCD"))], 
+      [#rect(fill:rgb("#7A8B8B"))], 
+      [lightgoldenrod],
+      [#rect(fill:rgb("#EEDD82"))], 
+      [#rect(fill:rgb("#FFEC8B"))], 
+      [#rect(fill:rgb("#EEDC82"))], 
+      [#rect(fill:rgb("#CDBE70"))], 
+      [#rect(fill:rgb("#8B814C"))], 
+      [lightpink],
+      [#rect(fill:rgb("#FFB6C1"))], 
+      [#rect(fill:rgb("#FFAEB9"))], 
+      [#rect(fill:rgb("#EEA2AD"))], 
+      [#rect(fill:rgb("#CD8C95"))], 
+      [#rect(fill:rgb("#8B5F65"))], 
+      [lightsalmon],
+      [#rect(fill:rgb("#FFA07A"))], 
+      [#rect(fill:rgb("#FFA07A"))], 
+      [#rect(fill:rgb("#EE9572"))], 
+      [#rect(fill:rgb("#CD8162"))], 
+      [#rect(fill:rgb("#8B5742"))], 
+      [lightskyblue],
+      [#rect(fill:rgb("#87CEFA"))], 
+      [#rect(fill:rgb("#B0E2FF"))], 
+      [#rect(fill:rgb("#A4D3EE"))], 
+      [#rect(fill:rgb("#8DB6CD"))], 
+      [#rect(fill:rgb("#607B8B"))], 
+      [lightsteelblue],
+      [#rect(fill:rgb("#B0C4DE"))], 
+      [#rect(fill:rgb("#CAE1FF"))], 
+      [#rect(fill:rgb("#BCD2EE"))], 
+      [#rect(fill:rgb("#A2B5CD"))], 
+      [#rect(fill:rgb("#6E7B8B"))], 
+      [lightyellow],
+      [#rect(fill:rgb("#FFFFE0"))], 
+      [#rect(fill:rgb("#FFFFE0"))], 
+      [#rect(fill:rgb("#EEEED1"))], 
+      [#rect(fill:rgb("#CDCDB4"))], 
+      [#rect(fill:rgb("#8B8B7A"))], 
+      [magenta],
+      [#rect(fill:rgb("#FF00FF"))], 
+      [#rect(fill:rgb("#FF00FF"))], 
+      [#rect(fill:rgb("#EE00EE"))], 
+      [#rect(fill:rgb("#CD00CD"))], 
+      [#rect(fill:rgb("#8B008B"))], 
+      [maroon],
+      [#rect(fill:rgb("#B03060"))], 
+      [#rect(fill:rgb("#FF34B3"))], 
+      [#rect(fill:rgb("#EE30A7"))], 
+      [#rect(fill:rgb("#CD2990"))], 
+      [#rect(fill:rgb("#8B1C62"))], 
+      [mediumorchid],
+      [#rect(fill:rgb("#BA55D3"))], 
+      [#rect(fill:rgb("#E066FF"))], 
+      [#rect(fill:rgb("#D15FEE"))], 
+      [#rect(fill:rgb("#B452CD"))], 
+      [#rect(fill:rgb("#7A378B"))], 
+      [mediumpurple],
+      [#rect(fill:rgb("#9370DB"))], 
+      [#rect(fill:rgb("#AB82FF"))], 
+      [#rect(fill:rgb("#9F79EE"))], 
+      [#rect(fill:rgb("#8968CD"))], 
+      [#rect(fill:rgb("#5D478B"))], 
+      [mistyrose],
+      [#rect(fill:rgb("#FFE4E1"))], 
+      [#rect(fill:rgb("#FFE4E1"))], 
+      [#rect(fill:rgb("#EED5D2"))], 
+      [#rect(fill:rgb("#CDB7B5"))], 
+      [#rect(fill:rgb("#8B7D7B"))], 
+      [navajowhite],
+      [#rect(fill:rgb("#FFDEAD"))], 
+      [#rect(fill:rgb("#FFDEAD"))], 
+      [#rect(fill:rgb("#EECFA1"))], 
+      [#rect(fill:rgb("#CDB38B"))], 
+      [#rect(fill:rgb("#8B795E"))], 
+      [olivedrab],
+      [#rect(fill:rgb("#6B8E23"))], 
+      [#rect(fill:rgb("#C0FF3E"))], 
+      [#rect(fill:rgb("#B3EE3A"))], 
+      [#rect(fill:rgb("#9ACD32"))], 
+      [#rect(fill:rgb("#698B22"))], 
+      [orange],
+      [#rect(fill:rgb("#FFA500"))], 
+      [#rect(fill:rgb("#FFA500"))], 
+      [#rect(fill:rgb("#EE9A00"))], 
+      [#rect(fill:rgb("#CD8500"))], 
+      [#rect(fill:rgb("#8B5A00"))], 
+      [orangered],
+      [#rect(fill:rgb("#FF4500"))], 
+      [#rect(fill:rgb("#FF4500"))], 
+      [#rect(fill:rgb("#EE4000"))], 
+      [#rect(fill:rgb("#CD3700"))], 
+      [#rect(fill:rgb("#8B2500"))], 
+      [orchid],
+      [#rect(fill:rgb("#DA70D6"))], 
+      [#rect(fill:rgb("#FF83FA"))], 
+      [#rect(fill:rgb("#EE7AE9"))], 
+      [#rect(fill:rgb("#CD69C9"))], 
+      [#rect(fill:rgb("#8B4789"))], 
+      [palegreen],
+      [#rect(fill:rgb("#98FB98"))], 
+      [#rect(fill:rgb("#9AFF9A"))], 
+      [#rect(fill:rgb("#90EE90"))], 
+      [#rect(fill:rgb("#7CCD7C"))], 
+      [#rect(fill:rgb("#548B54"))], 
+
+      [], [], [1], [2], [3], [4], 
+      [paleturquoise],
+      [#rect(fill:rgb("#AFEEEE"))], 
+      [#rect(fill:rgb("#BBFFFF"))], 
+      [#rect(fill:rgb("#AEEEEE"))], 
+      [#rect(fill:rgb("#96CDCD"))], 
+      [#rect(fill:rgb("#668B8B"))], 
+      [palevioletred],
+      [#rect(fill:rgb("#DB7093"))], 
+      [#rect(fill:rgb("#FF82AB"))], 
+      [#rect(fill:rgb("#EE799F"))], 
+      [#rect(fill:rgb("#CD6889"))], 
+      [#rect(fill:rgb("#8B475D"))], 
+      [peachpuff],
+      [#rect(fill:rgb("#FFDAB9"))], 
+      [#rect(fill:rgb("#FFDAB9"))], 
+      [#rect(fill:rgb("#EECBAD"))], 
+      [#rect(fill:rgb("#CDAF95"))], 
+      [#rect(fill:rgb("#8B7765"))], 
+      [pink],
+      [#rect(fill:rgb("#FFC0CB"))], 
+      [#rect(fill:rgb("#FFB5C5"))], 
+      [#rect(fill:rgb("#EEA9B8"))], 
+      [#rect(fill:rgb("#CD919E"))], 
+      [#rect(fill:rgb("#8B636C"))], 
+      [plum],
+      [#rect(fill:rgb("#DDA0DD"))], 
+      [#rect(fill:rgb("#FFBBFF"))], 
+      [#rect(fill:rgb("#EEAEEE"))], 
+      [#rect(fill:rgb("#CD96CD"))], 
+      [#rect(fill:rgb("#8B668B"))], 
+      [purple],
+      [#rect(fill:rgb("#A020F0"))], 
+      [#rect(fill:rgb("#9B30FF"))], 
+      [#rect(fill:rgb("#912CEE"))], 
+      [#rect(fill:rgb("#7D26CD"))], 
+      [#rect(fill:rgb("#551A8B"))], 
+      [red],
+      [#rect(fill:rgb("#FF0000"))], 
+      [#rect(fill:rgb("#FF0000"))], 
+      [#rect(fill:rgb("#EE0000"))], 
+      [#rect(fill:rgb("#CD0000"))], 
+      [#rect(fill:rgb("#8B0000"))], 
+      [rosybrown],
+      [#rect(fill:rgb("#BC8F8F"))], 
+      [#rect(fill:rgb("#FFC1C1"))], 
+      [#rect(fill:rgb("#EEB4B4"))], 
+      [#rect(fill:rgb("#CD9B9B"))], 
+      [#rect(fill:rgb("#8B6969"))], 
+      [royalblue],
+      [#rect(fill:rgb("#4169E1"))], 
+      [#rect(fill:rgb("#4876FF"))], 
+      [#rect(fill:rgb("#436EEE"))], 
+      [#rect(fill:rgb("#3A5FCD"))], 
+      [#rect(fill:rgb("#27408B"))], 
+      [salmon],
+      [#rect(fill:rgb("#FA8072"))], 
+      [#rect(fill:rgb("#FF8C69"))], 
+      [#rect(fill:rgb("#EE8262"))], 
+      [#rect(fill:rgb("#CD7054"))], 
+      [#rect(fill:rgb("#8B4C39"))], 
+      [seagreen],
+      [#rect(fill:rgb("#2E8B57"))], 
+      [#rect(fill:rgb("#54FF9F"))], 
+      [#rect(fill:rgb("#4EEE94"))], 
+      [#rect(fill:rgb("#43CD80"))], 
+      [#rect(fill:rgb("#2E8B57"))], 
+      [seashell],
+      [#rect(fill:rgb("#FFF5EE"))], 
+      [#rect(fill:rgb("#FFF5EE"))], 
+      [#rect(fill:rgb("#EEE5DE"))], 
+      [#rect(fill:rgb("#CDC5BF"))], 
+      [#rect(fill:rgb("#8B8682"))], 
+      [sienna],
+      [#rect(fill:rgb("#A0522D"))], 
+      [#rect(fill:rgb("#FF8247"))], 
+      [#rect(fill:rgb("#EE7942"))], 
+      [#rect(fill:rgb("#CD6839"))], 
+      [#rect(fill:rgb("#8B4726"))], 
+      [skyblue],
+      [#rect(fill:rgb("#87CEEB"))], 
+      [#rect(fill:rgb("#87CEFF"))], 
+      [#rect(fill:rgb("#7EC0EE"))], 
+      [#rect(fill:rgb("#6CA6CD"))], 
+      [#rect(fill:rgb("#4A708B"))], 
+      [slateblue],
+      [#rect(fill:rgb("#6A5ACD"))], 
+      [#rect(fill:rgb("#836FFF"))], 
+      [#rect(fill:rgb("#7A67EE"))], 
+      [#rect(fill:rgb("#6959CD"))], 
+      [#rect(fill:rgb("#473C8B"))], 
+      [slategray],
+      [#rect(fill:rgb("#708090"))], 
+      [#rect(fill:rgb("#C6E2FF"))], 
+      [#rect(fill:rgb("#B9D3EE"))], 
+      [#rect(fill:rgb("#9FB6CD"))], 
+      [#rect(fill:rgb("#6C7B8B"))], 
+      [snow],
+      [#rect(fill:rgb("#FFFAFA"))], 
+      [#rect(fill:rgb("#FFFAFA"))], 
+      [#rect(fill:rgb("#EEE9E9"))], 
+      [#rect(fill:rgb("#CDC9C9"))], 
+      [#rect(fill:rgb("#8B8989"))], 
+      [springgreen],
+      [#rect(fill:rgb("#00FF7F"))], 
+      [#rect(fill:rgb("#00FF7F"))], 
+      [#rect(fill:rgb("#00EE76"))], 
+      [#rect(fill:rgb("#00CD66"))], 
+      [#rect(fill:rgb("#008B45"))], 
+      [steelblue],
+      [#rect(fill:rgb("#4682B4"))], 
+      [#rect(fill:rgb("#63B8FF"))], 
+      [#rect(fill:rgb("#5CACEE"))], 
+      [#rect(fill:rgb("#4F94CD"))], 
+      [#rect(fill:rgb("#36648B"))], 
+      [tan],
+      [#rect(fill:rgb("#D2B48C"))], 
+      [#rect(fill:rgb("#FFA54F"))], 
+      [#rect(fill:rgb("#EE9A49"))], 
+      [#rect(fill:rgb("#CD853F"))], 
+      [#rect(fill:rgb("#8B5A2B"))], 
+      [thistle],
+      [#rect(fill:rgb("#D8BFD8"))], 
+      [#rect(fill:rgb("#FFE1FF"))], 
+      [#rect(fill:rgb("#EED2EE"))], 
+      [#rect(fill:rgb("#CDB5CD"))], 
+      [#rect(fill:rgb("#8B7B8B"))], 
+      [tomato],
+      [#rect(fill:rgb("#FF6347"))], 
+      [#rect(fill:rgb("#FF6347"))], 
+      [#rect(fill:rgb("#EE5C42"))], 
+      [#rect(fill:rgb("#CD4F39"))], 
+      [#rect(fill:rgb("#8B3626"))], 
+      [turquoise],
+      [#rect(fill:rgb("#40E0D0"))], 
+      [#rect(fill:rgb("#00F5FF"))], 
+      [#rect(fill:rgb("#00E5EE"))], 
+      [#rect(fill:rgb("#00C5CD"))], 
+      [#rect(fill:rgb("#00868B"))], 
+      [violetred],
+      [#rect(fill:rgb("#D02090"))], 
+      [#rect(fill:rgb("#FF3E96"))], 
+      [#rect(fill:rgb("#EE3A8C"))], 
+      [#rect(fill:rgb("#CD3278"))], 
+      [#rect(fill:rgb("#8B2252"))], 
+      [wheat],
+      [#rect(fill:rgb("#F5DEB3"))], 
+      [#rect(fill:rgb("#FFE7BA"))], 
+      [#rect(fill:rgb("#EED8AE"))], 
+      [#rect(fill:rgb("#CDBA96"))], 
+      [#rect(fill:rgb("#8B7E66"))], 
+      [yellow],
+      [#rect(fill:rgb("#FFFF00"))], 
+      [#rect(fill:rgb("#FFFF00"))], 
+      [#rect(fill:rgb("#EEEE00"))], 
+      [#rect(fill:rgb("#CDCD00"))], 
+      [#rect(fill:rgb("#8B8B00"))],
+    )
+  ]
+)
+
+
+//#image("pics/colors_other.png", height:8cm)
+#box(height:9.5cm,
+  columns(3, gutter:1em)[
+
+    #set rect(width: 1.4em, height: 1.4em, stroke:0.5pt+gray)
+    #tablex(
+      columns: 2,     // 2 means 2 auto-sized columns
+      gutter: 0.5mm,    // space between columns
+      align: horizon,
+      auto-lines: false,
+      inset: (x: 0em, y: 0em),
+
+      [aliceblue], [#rect(fill:rgb("#F0F8FF"))], 
+      [aqua], [#rect(fill:rgb("#00FFFF"))], 
+      [beige], [#rect(fill:rgb("#F5F5DC"))], 
+      [black], [#rect(fill:rgb("#000000"))], 
+      [blanchedalmond], [#rect(fill:rgb("#FFEBCD"))], 
+      [blueviolet], [#rect(fill:rgb("#8A2BE2"))], 
+      [cornflowerblue], [#rect(fill:rgb("#6495ED"))], 
+      [crimson], [#rect(fill:rgb("#DC143C"))], 
+      [darkblue], [#rect(fill:rgb("#00008B"))], 
+      [darkcyan], [#rect(fill:rgb("#008B8B"))], 
+      [darkgray], [#rect(fill:rgb("#A9A9A9"))], 
+      [darkgreen], [#rect(fill:rgb("#006400"))], 
+      [darkgrey], [#rect(fill:rgb("#A9A9A9"))], 
+      [darkkhaki], [#rect(fill:rgb("#BDB76B"))], 
+      [darkmagenta], [#rect(fill:rgb("#8B008B"))], 
+      [darkred], [#rect(fill:rgb("#8B0000"))], 
+      [darksalmon], [#rect(fill:rgb("#E9967A"))], 
+      [darkslateblue], [#rect(fill:rgb("#483D8B"))], 
+      [darkslategrey], [#rect(fill:rgb("#2F4F4F"))], 
+      [darkturquoise], [#rect(fill:rgb("#00CED1"))], 
+      [darkviolet], [#rect(fill:rgb("#9400D3"))], 
+      [dimgray], [#rect(fill:rgb("#696969"))], 
+      [dimgrey], [#rect(fill:rgb("#696969"))], 
+      [floralwhite], [#rect(fill:rgb("#FFFAF0"))], 
+      [forestgreen], [#rect(fill:rgb("#228B22"))], 
+      [fuchsia], [#rect(fill:rgb("#FF00FF"))], 
+      [gainsboro], [#rect(fill:rgb("#DCDCDC"))], 
+      [ghostwhite], [#rect(fill:rgb("#F8F8FF"))], 
+      [gray], [#rect(fill:rgb("#BEBEBE"))], 
+      [gray100], [#rect(fill:rgb("#FFFFFF"))], 
+      [greenyellow], [#rect(fill:rgb("#ADFF2F"))], 
+      [grey], [#rect(fill:rgb("#BEBEBE"))], 
+      [grey100], [#rect(fill:rgb("#FFFFFF"))], 
+      [indigo], [#rect(fill:rgb("#4B0082"))], 
+      [lavender], [#rect(fill:rgb("#E6E6FA"))], 
+      [lawngreen], [#rect(fill:rgb("#7CFC00"))], 
+      [lightcoral], [#rect(fill:rgb("#F08080"))], 
+      [lightgoldenrodyellow], [#rect(fill:rgb("#FAFAD2"))], 
+      [lightgray], [#rect(fill:rgb("#D3D3D3"))], 
+      [lightgreen], [#rect(fill:rgb("#90EE90"))], 
+      [lightgrey], [#rect(fill:rgb("#D3D3D3"))], 
+      [lightseagreen], [#rect(fill:rgb("#20B2AA"))], 
+      [lightslateblue], [#rect(fill:rgb("#8470FF"))], 
+      [lightslategray], [#rect(fill:rgb("#778899"))], 
+      [lightslategrey], [#rect(fill:rgb("#778899"))], 
+      [lime], [#rect(fill:rgb("#00FF00"))], 
+      [limegreen], [#rect(fill:rgb("#32CD32"))], 
+      [linen], [#rect(fill:rgb("#FAF0E6"))], 
+      [mediumaquamarine], [#rect(fill:rgb("#66CDAA"))], 
+      [mediumblue], [#rect(fill:rgb("#0000CD"))], 
+      [mediumseagreen], [#rect(fill:rgb("#3CB371"))], 
+      [mediumslateblue], [#rect(fill:rgb("#7B68EE"))], 
+      [mediumspringgreen], [#rect(fill:rgb("#00FA9A"))], 
+      [mediumturquoise], [#rect(fill:rgb("#48D1CC"))], 
+      [mediumvioletred], [#rect(fill:rgb("#C71585"))], 
+      [midnightblue], [#rect(fill:rgb("#191970"))], 
+      [mintcream], [#rect(fill:rgb("#F5FFFA"))], 
+      [moccasin], [#rect(fill:rgb("#FFE4B5"))], 
+      [navy], [#rect(fill:rgb("#000080"))], 
+      [navyblue], [#rect(fill:rgb("#000080"))], 
+      [oldlace], [#rect(fill:rgb("#FDF5E6"))], 
+      [olive], [#rect(fill:rgb("#808000"))], 
+      [palegoldenrod], [#rect(fill:rgb("#EEE8AA"))], 
+      [papayawhip], [#rect(fill:rgb("#FFEFD5"))], 
+      [peru], [#rect(fill:rgb("#CD853F"))], 
+      [powderblue], [#rect(fill:rgb("#B0E0E6"))], 
+      [saddlebrown], [#rect(fill:rgb("#8B4513"))], 
+      [sandybrown], [#rect(fill:rgb("#F4A460"))], 
+      [silver], [#rect(fill:rgb("#C0C0C0"))], 
+      [slategrey], [#rect(fill:rgb("#708090"))], 
+      [teal], [#rect(fill:rgb("#008080"))], 
+      [violet], [#rect(fill:rgb("#EE82EE"))], 
+      [white], [#rect(fill:rgb("#FFFFFF"))], 
+      [whitesmoke], [#rect(fill:rgb("#F5F5F5"))], 
+      [yellowgreen], [#rect(fill:rgb("#9ACD32"))], 
+    )
+  ]
+)
 
 = #smallcaps[Écrire une commande python sur plusieurs lignes]
 - Utiliser la continuité implicite des lignes au sein des parenthèses/crochets/accolades
