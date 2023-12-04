@@ -940,7 +940,7 @@ Le code de la fonction doit être placé plus haut dans le code source (avant l'
   [paramètre par défaut \
   #alert[ATTENTION:] \
   `  def add(elem, to = []):` \
-  #alert[does not work, because python default args, are only evaluated once, and used for all function calls]], 
+  #alert[ne marche pas, car les arguments par défaut ne sont évalués qu'une seule fois et réutilisés pour tous les appels de la fonction.]],
 
   [`def func(par1, …, *par_n):`],
   [`*par_n` = nombre variable de paramètres (liste)], 
@@ -1490,10 +1490,10 @@ Position de la souris
 
 #syntaxTable(
   [`(x, y) = event.pos`],
-  [position of mouse pointer at exact time of event],
+  [position du pointeur de souris à l'instant de l'év.],
   
   [`(x, y) = pygame.mouse.get_pos()`],
-  [current position of mouse pointer (as tuple)],
+  [position actuelle du pointeur de souris (tuple)],
 )
 
 #grid(
@@ -1709,10 +1709,11 @@ Exemple:
 
 #syntaxTable(
   [`pygame.time.delay(delay)`],
-  [pause the program for given number of ms (`delay`) and returns actual number of ms used],
+  [interrompre le programme pour un nombre de ms donnés (`delay`) et renvoie le nombre effectif de ms utilisés],
   
   [`pygame.time.ticks()`],
   [return time in ms, since `pygame.init()` was called],
+  [renvoie le temps en ms depuis l'appel de `pygame.init()`],
 )
 
 #colbreak()
