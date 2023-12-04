@@ -1712,7 +1712,6 @@ Exemple:
   [interrompre le programme pour un nombre de ms donnés (`delay`) et renvoie le nombre effectif de ms utilisés],
   
   [`pygame.time.ticks()`],
-  [return time in ms, since `pygame.init()` was called],
   [renvoie le temps en ms depuis l'appel de `pygame.init()`],
 )
 
