@@ -1490,10 +1490,10 @@ Position de la souris
 
 #syntaxTable(
   [`(x, y) = event.pos`],
-  [position du pointeur de souris à l'instant de l'év.],
+  [position du pointeur de souris à l'instant de l'événement],
   
   [`(x, y) = pygame.mouse.get_pos()`],
-  [position actuelle du pointeur de souris (tuple)],
+  [position actuelle du pointeur de souris (uplet)],
 )
 
 #grid(
