@@ -1108,10 +1108,13 @@ retourner le nombre aléatoire -1 ou 1
 == Manipulation de fichiers
 
 #syntaxTable(
-  [`file = open(filename, mode='r')`],
-  [retourne un objet fichier, #h(1fr) `'r'`	= mode lecture,\
-  #h(1fr)	`'w'` =	mode écriture,	`'a'`= mode écriture/ajout (à la fin)],
-  
+  [`file = open(filename, mode='r')` \
+   `file = open(filename, mode='r',` \ #h(1fr) `encoding='utf-8')`],
+  [retourne un objet fichier \
+  - `mode='r'` (lecture), `'w'` (écriture),	`'a'` (ajout à la fin) ou `'x'`(création)
+  - (optionel) choisir l'encodage du fichier avec \
+      `encoding='utf-8'`, `'ascii'` ou `'latin-1'`],
+
   [`line = file.readline()`],
   [lit et retourne la prochaine ligne complète avec caractère fin de ligne (retourne une chaîne vide `""` si la fin du fichier est atteinte)],
   
