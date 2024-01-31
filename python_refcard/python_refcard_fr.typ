@@ -39,7 +39,7 @@
 
 /* --- page header --- */
 #set page(header: rect(stroke:(top:0pt, bottom:0.6pt), inset:(x:0pt, y:3pt))[
-  #smallcaps[Python 3 - Refcard] v3.0.2 (1ère et 2e B)
+  #smallcaps[Python 3 - Refcard] v3.0.3 (1ère et 2e B)
   #h(1fr)
   Page #counter(page).display(
     "1/1",
@@ -1361,12 +1361,12 @@ Instanciation #ar création d'un objet à partir d'une classe existante (chaque 
   ], 
   
   [```
-  for event in pygame.event.get():
-    if event.type == QUIT:
-      done = True
-    elif event.type == <type d'événement>:
-      <instruction(s)>
-    …
+    for event in pygame.event.get():
+      if event.type == QUIT:
+        done = True
+      elif event.type == <type d'événement>:
+        <instruction(s)>
+      …
   ```],
   [`# Gestion des événements` \
   *Event loop*
