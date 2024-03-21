@@ -1447,8 +1447,8 @@ Instanciation #ar création d'un objet à partir d'une classe existante (chaque 
   if keys[K_LEFT] and not keys[K_RIGHT]:
     …
   ```],
-  [get state of all keyboard buttons \
-  (refresh with #ar `pygame.event.get()`) \
+  [renvoie dictionnaire de toutes les touches pressées  
+  (rafraichir avec #ar `pygame.event.get()`) \
   p. ex. faire une action aussi longtemps que la touche flèche #al est enfoncée], 
 )
 
@@ -1508,7 +1508,7 @@ Position de la souris
   -	largeur de `0` … `WIDTH-1`
   -	hauteur de `0` … `HEIGHT-1`
   ],
-  align(right)[#image("inc/pygame_screen.svg", width: 3cm)],
+  align(right)[#image("inc/pygame_screen.svg", width: 2.8cm)],
 )
 Dimensions de la surface de dessin
 
@@ -1702,7 +1702,8 @@ Exemple:
   ```],
   [crée un objet font \
   crée nouvelle surface avec texte \
-  copie la surface `surf_text` sur `screen` à la position indiquée et mise à jour
+  copie la surface `surf_text` sur `screen` à la position indiquée et mise à jour \
+  (`dest` indique le coin sup. gauche)
   ],
 )
 
