@@ -39,7 +39,7 @@
 
 /* --- page header --- */
 #set page(header: rect(stroke:(top:0pt, bottom:0.6pt), inset:(x:0pt, y:3pt))[
-  #smallcaps[Python 3 - Refcard] v3.0.4 (1ère et 2e B)
+  #smallcaps[Python 3 - Refcard] v3.0.5 (1ère et 2e B)
   #h(1fr)
   Page #counter(page).display(
     "1/1",
@@ -1979,7 +1979,7 @@ Set items are unordered, unchangeable and do not allow duplicate values. Items c
 // )
 
 
-= #smallcaps[Écrire une commande python sur plusieurs lignes]
+=  #smallcaps[Écrire une commande python sur plusieurs lignes]
 - Utiliser la continuité implicite des lignes au sein des parenthèses/crochets/accolades
 - Utiliser en dernier recours le backslash `"\"` (= line break)
 
@@ -2017,3 +2017,7 @@ Set items are unordered, unchangeable and do not allow duplicate values. Items c
     and a < 10:
   ```],
 )
+
+=  #smallcaps[Divers]
+- Distance entre 2 points $P_1(x_1, y_1)$ et $P_2(x_2, y_2)$ :
+  $d=sqrt((x_1-x_2)+(y_1-y_2))$
