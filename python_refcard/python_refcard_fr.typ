@@ -3,7 +3,7 @@
 /* --- page layout --- */
 #set page(margin: (
   top: 1.2cm,
-  bottom: 1.2cm,
+  bottom: 1cm,
   x: 0.8cm,
 ))
 
@@ -39,7 +39,7 @@
 
 /* --- page header --- */
 #set page(header: rect(stroke:(top:0pt, bottom:0.6pt), inset:(x:0pt, y:3pt))[
-  #smallcaps[Python 3 - Refcard] v3.0.5 (1ère et 2e B)
+  #smallcaps[Python 3 - Refcard] v3.0.6 (1ère et 2e B)
   #h(1fr)
   Page #counter(page).display(
     "1/1",
@@ -684,7 +684,7 @@ Les dictionnaires sont modifiables, mais pas des séquences. L'ordre des éléme
 )
 
 = Expressions et opérateurs
-Opérateurs entourés d'espaces. Utiliser des parenthèses pour grouper des opérations (modifier la priorité)
+Opérateurs entourés d'espaces. Utiliser parenthèses pour grouper des opérations (modifier la priorité)
 
 == Opérateurs mathématiques
 La 1ère colonne indique la priorité des opérateurs
@@ -756,7 +756,7 @@ retournent `True` ou `1` si l'expression est vérifiée, sinon `False` ou `0`
 )
 chaînes de caractères #ar ordre lexicographique, majuscules précèdent les minuscules
 
-#colbreak()
+//#colbreak()
 == Opérateurs logiques
 
 #syntaxTable(columns: (auto, auto, 1fr),
@@ -959,9 +959,6 @@ Les paramètres et variables locales cachent les variables globales/extérieures
 #colbreak()
 = #smallcaps[Utilisation de modules (bibliothèques)]
 
-== Utiliser des modules
-
-
 #syntaxTable(
   [`import module`],
   [importe tout le module, il faut préfixer par le nom du module . Ex : `import math` #ar `math.sqrt()`],
@@ -971,8 +968,8 @@ Les paramètres et variables locales cachent les variables globales/extérieures
   
   [`from module import *` \
    #alert[`*** à éviter ***`]],
-  [intègre toutes les méthodes de module, pas besoin de préfixer le nom du module \
-   ex : `from math import *` #ar `sqrt()`],
+  [intègre toutes les méthodes de module, pas besoin de préfixer le nom du module.
+   Ex : `from math import *` #ar `sqrt()`],
   
   [`from module import m1, m2, …`\
    `from math import sqrt, cos`],
@@ -989,9 +986,8 @@ Built-in functions (no import required)
   [valeur absolue (aussi nombres complexes)],
   
   [`round(x)`],
-  [`x` est arrondie vers l'entier pair le plus proche \
-   - `round(3.5)` #ar 4 #quad (rounds to nearest EVEN integer) \
-   - `round(4.5)` #ar 4 #quad (rounds to nearest EVEN integer)],
+  [`x` est arrondie vers l'entier pair le plus proche (rounds to nearest EVEN integer)\
+   - `round(3.5)` #ar 4 #quad  `round(4.5)` #ar 4],
 )
 
 import math
@@ -1112,11 +1108,10 @@ retourner le nombre aléatoire -1 ou 1
    `file = open(filename, mode='r',` \ #h(1fr) `encoding='utf-8')`],
   [retourne un objet fichier \
   - `mode='r'` (lecture), `'w'` (écriture),	`'a'` (ajout à la fin) ou `'x'`(création)
-  - (optionel) choisir l'encodage du fichier avec \
-      `encoding='utf-8'`, `'ascii'` ou `'latin-1'`],
+  - (optionel) `encoding='utf-8'`, `'ascii'` ou `'latin-1'`],
 
   [`line = file.readline()`],
-  [lit et retourne la prochaine ligne complète avec caractère fin de ligne (retourne une chaîne vide `""` si la fin du fichier est atteinte)],
+  [lit et retourne la prochaine ligne complète avec caractère fin de ligne (retourne chaîne vide `""` si fin du fichier est atteinte)],
   
   [`for line in file:` \
    `  …`],
@@ -1143,6 +1138,19 @@ retourner le nombre aléatoire -1 ou 1
   [`file.close()`],
   [fermer `file` (si traitement du fichier est terminé)], 
 )
+== Vérifier si un fichier existe
+
+#syntaxTable(
+  [```
+  import os
+  filename = os.path.normpath(f"{path}/{filename}")
+  if os.path.isfile(filename):
+    …
+  ```],
+  [ \
+  convertir les séparatuers de chemin \
+  vérifie si le fichier du nom `filename` existe]
+)
 
 == Lire de STDIN en Python (manière de filtres)
 
@@ -1161,9 +1169,8 @@ retourner le nombre aléatoire -1 ou 1
     …
   ```],
 )
-To terminate readline(), when STDIN is read from keyboard, press CTRL-D (CTRL-Z on Windows)
+To terminate readline(), when STDIN is read from keyboard, press CTRL-D (CTRL-Z on Windows) #colbreak()
 
-#colbreak()
 = #smallcaps[Module: string] #h(1fr) import string
 
 #syntaxTable(
