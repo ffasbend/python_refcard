@@ -39,7 +39,7 @@
 
 /* --- page header --- */
 #set page(header: rect(stroke:(top:0pt, bottom:0.6pt), inset:(x:0pt, y:3pt))[
-  #smallcaps[Python 3 - Refcard] v3.0.6 (1ère et 2e B)
+  #smallcaps[Python 3 - Refcard] v3.0.7 (1ère et 2e B)
   #h(1fr)
   Page #counter(page).display(
     "1/1",
@@ -553,6 +553,9 @@ Attention :
   
   [`if lst:   ou    if len(lst) > 0:`],
   [test si la liste `lst` n'est pas vide], 
+
+  [`map(fonction, lst)`], 
+  [applique la fonction sur chaque élément de la liste],
 )
 
 = #smallcaps[Range (=séquences non modifiables)]
@@ -1107,8 +1110,9 @@ retourner le nombre aléatoire -1 ou 1
   [`file = open(filename, mode='r')` \
    `file = open(filename, mode='r',` \ #h(1fr) `encoding='utf-8')`],
   [retourne un objet fichier \
-  - `mode='r'` (lecture), `'w'` (écriture),	`'a'` (ajout à la fin) ou `'x'`(création)
-  - (optionel) `encoding='utf-8'`, `'ascii'` ou `'latin-1'`],
+  - `mode='r'` (lecture), `'w'` (écriture),	`'a'` (ajout à la fin) \
+    (`'w'` crée un nouveau fichier ou vide le fichier existant)
+  - (optionnel) `encoding='utf-8'`, `'ascii'` ou `'latin-1'`],
 
   [`line = file.readline()`],
   [lit et retourne la prochaine ligne complète avec caractère fin de ligne (retourne chaîne vide `""` si fin du fichier est atteinte)],
